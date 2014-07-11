@@ -68,15 +68,15 @@ module Sensu::Extension
         from = 'Sensu Event'
         subject = "#{status} #{event[:check][:output].chomp} on #{event[:client][:name]}"
         body = <<-EOF
-        status:           #{status}
-        output:           #{event[:check][:output].chomp}
-        client:           #{event[:client][:name]} (#{event[:client][:address]})
-        issued:           #{Time.at(event[:check][:issued])}
-        interval:         #{event[:check][:interval]}
-        handler interval: #{handler_interval}
+status:           #{status}
+output:           #{event[:check][:output].chomp}
+client:           #{event[:client][:name]} (#{event[:client][:address]})
+issued:           #{Time.at(event[:check][:issued])}
+interval:         #{event[:check][:interval]}
+handler interval: #{handler_interval}
 
-        kthnxbye,
-        Ops
+kthnxbye,
+Ops
         EOF
 
         if @settings[:baggage][:baggage_id].downcase == 'test'
