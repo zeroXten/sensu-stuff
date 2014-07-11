@@ -5,7 +5,7 @@ require 'time'
 module Sensu::Extension
   class HandlerInterval < Mutator
 
-    ONE_DAY = 60 * 60 * 24
+    ONE_WEEK = 60 * 60 * 24 * 7
 
     def post_init
       @redis = Redis.new(@settings[:handler_interval][:redis])
@@ -27,7 +27,7 @@ module Sensu::Extension
     end
 
     def run(event, &block)
-      expire_period = ONE_DAY
+      expire_period = ONE_WEEK
 
       if event[:check][:handler_interval]
         key = "#{event[:client][:name]}/#{event[:check][:name]}"
