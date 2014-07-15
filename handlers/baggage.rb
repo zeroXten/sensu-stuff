@@ -66,12 +66,16 @@ module Sensu::Extension
         handler_interval = event[:check][:handler_interval] ? event[:check][:handler_interval] : 'none'
 
         from = 'Sensu Event'
-        subject = "#{status} #{event[:check][:output].chomp} on #{event[:client][:name]}"
+        subject = "#{status} #{event[:check][:name]} on #{event[:client][:name]}"
         body = <<-EOF
+
+#{event[:check][:output].chomp}
+
 status:           #{status}
-output:           #{event[:check][:output].chomp}
 client:           #{event[:client][:name]} (#{event[:client][:address]})
 issued:           #{Time.at(event[:check][:issued])}
+
+command:          #{event[:check][:command]}
 interval:         #{event[:check][:interval]}
 handler interval: #{handler_interval}
 
