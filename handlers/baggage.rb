@@ -10,7 +10,17 @@ require 'time'
 class BaggageHandler < Sensu::Handler
 
   def handle
-    status = @event['action'] == :create ? "ALERT" : "RESOLVED"
+    case @event['action'].to_s
+    when 'create'
+      status = 'ALERT'
+    when 'flapping'
+      status = 'FLAPPING'
+    when 'resolve'
+      status = 'RESOLVED'
+    else
+      status = 'OTHER'
+    end
+
     from = 'Sensu Event'
     subject = "#{status} #{@event['check']['name']} #{@event['client']['name']}"
     body = <<-EOF
