@@ -31,7 +31,7 @@ EOF
     if settings['baggage']['baggage_id'].downcase == 'test'
       puts subject
     else
-      resp = RestClient.get "https://api.baggage.io/send/#{settings[:baggage][:baggage_id]}", {:params => {:token => settings[:baggage][:baggage_email_token], :subject => subject, :body => body, :from => from}}
+      resp = RestClient.get "https://api.baggage.io/send/#{settings['baggage']['baggage_id']}", {:params => {:token => settings['baggage']['baggage_email_token'], :subject => subject, :body => body, :from => from}}
       puts resp.code
     end
   end
